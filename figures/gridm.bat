@@ -1,0 +1,26 @@
+@echo off
+set GMT_SESSION_NAME=6860
+gmt begin fi1111 jpg
+	gmt set FONT_ANNOT 16p,1
+	
+	gmt grdimage @earth_relief_01s -Ctopo -I+d -JM30c -R-167.1/-166.05/53.65/54.05 -Ba15mf5m -BWSEN
+	gmt coast -S115/162/178 -Lg-167/54.03+c54+w5k+f+u -W10p,115/162/178
+	
+	gmt plot -W2p,black,- -L area.txt
+	gmt plot legends.dat -W4p,lightyellow -G115/162/178 -L
+	
+	gmt velo -Se1.5c/0.95/14 -A0.1i+z1.5c+e+a60 -W3p,navy -Gnavy observedH.txt -D0.45
+	gmt plot -Sv0.1i+z1.5c+e+a60 -W3p,red3 	-Gred3 	observedV.txt
+	gmt plot -Sv0.1i+z1.5c+e+a60 -W3p,white -Gwhite modelH.txt
+	gmt plot -Sv0.1i+z1.5c+e+a60 -W3p,black -Gblack modelV.txt
+	
+	gmt plot -Sc1c -W1p,black -Gred		sites.dat
+	gmt plot -Sc1c -W1p,black -Gorange1	sites1.dat
+	gmt plot -Sc1c -W1p,black -Ggray	sites2.dat
+		gmt text SiteText.dat -F+f20p,1,white
+	gmt text -F+f22p,1,black+jL legend1.txt
+	
+	gmt plot -St1c volcano.txt -Gdarkorange1 -W1p,black
+	
+gmt end show
+
